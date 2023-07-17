@@ -6,7 +6,7 @@ from gallery.models import Photography
 
 
 def index(request):
-    photography: QuerySet = Photography.objects.all()
+    photography: QuerySet = Photography.objects.order_by('created_at').filter(published=True)
     return render(request, "gallery/index.html", {'photography': photography})
 
 

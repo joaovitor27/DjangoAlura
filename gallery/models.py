@@ -3,11 +3,20 @@ from django.utils.translation import gettext_lazy as _
 
 
 class Photography(models.Model):
+    CATEGORY_CHOICES = [
+        ('NEBULA', 'Nebulosa'),
+        ('GALAXY', 'Galáxia'),
+        ('PLANET', 'Planeta'),
+        ('STAR', 'Estrela'),
+    ]
+
     name = models.CharField(_('Nome'), max_length=150, null=False, blank=False)
     subtitle = models.CharField(_('Legenda'), max_length=150, null=False, blank=False)
+    category = models.CharField(_('Categoria'), max_length=8, choices=CATEGORY_CHOICES, default='')
     description = models.TextField(_('Descrição'), null=False, blank=False)
     # image = models.ImageField(name=_('Imagem'), upload_to="images/")
     image = models.CharField(_('Imagem'), max_length=150, null=False, blank=False)
+    published = models.BooleanField(_('Publicado'), default=False)
     created_at = models.DateTimeField(_('Criado em'), auto_now_add=True)
     updated_at = models.DateTimeField(_('Atualizado em'), auto_now=True)
 
