@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -16,6 +17,8 @@ class Photography(models.Model):
     description = models.TextField(_('Descrição'), null=False, blank=False)
     image = models.ImageField(_('Imagem'), upload_to='images/%Y/%m/%d/', null=False, blank=True)
     published = models.BooleanField(_('Publicado'), default=False)
+    user = models.ForeignKey(to=User, verbose_name=_('Usuário'), on_delete=models.SET_NULL, null=True, blank=False,
+                             related_name='photography_user')
     created_at = models.DateTimeField(_('Criado em'), auto_now_add=True)
     updated_at = models.DateTimeField(_('Atualizado em'), auto_now=True)
 

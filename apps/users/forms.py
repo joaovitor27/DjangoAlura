@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.models import User
 
 
 class LoginForm(forms.Form):
@@ -41,3 +42,36 @@ class RegisterForm(forms.Form):
             'placeholder': 'Digite sua Senha Novamente',
         }
     ))
+
+    def clean_username(self):
+        name = self.cleaned_data.get('username')
+        if name:
+            name = name.strip()
+            if " " in name:
+                raise forms.ValidationError('Nome de usuário não pode conter espaços!')
+
+        if User.objects.filter(username=name).exists():
+            raise forms.ValidationError('Nome de usuário já existe!')
+
+        return name
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if email:
+            email = email.strip()
+            if " " in email:
+                raise forms.ValidationError('E-mail não pode conter espaços!')
+
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError('E-mail já existe!')
+
+        return email
+
+    def clean_password2(self):
+        password1 = self.cleaned_data.get('password1')
+        password2 = self.cleaned_data.get('password2')
+
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError('As senhas não coincidem!')
+
+        return password2

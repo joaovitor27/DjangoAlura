@@ -1,8 +1,8 @@
-{% extends 'base.html' %}
+{% extends 'shared/base.html' %}
 {% load static %}
 {% block content %}
     <section class="galeria" style="margin-left: 5em">
-        <form action="" method="">
+        <form action="{% url 'login' %}" method="POST">
             {% csrf_token %}
             <div class="row">
                 {% for field in form_login.visible_fields %}
