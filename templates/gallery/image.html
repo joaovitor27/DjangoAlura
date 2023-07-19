@@ -5,7 +5,7 @@
         <section class="imagem">
             <div class="imagem__conteudo">
                 {% if not photo.image %}
-                    <img class="imagem__imagem" src="{% static '/assets/imagens/galeria/no_image.jpg' %}" alt="foto">
+                    <img class="imagem__imagem" src="{% static 'assets/imagens/galeria/no_image.jpg' %}" alt="foto">
                 {% else %}
                     <img class="imagem__imagem" src="{{ photo.image.url }}" alt="foto">
                 {% endif %}
@@ -15,6 +15,10 @@
                         <p class="imagem__descricao">{{ photo.subtitle }}</p>
                         <p class="imagem__descricao">{{ photo.updated_at }}</p>
                         <p class="imagem__texto">{{ photo.description }}</p>
+                    </div>
+                    <div class="imagem__botoes">
+                        <a class="btn btn-success col-12" href="{% url 'edit-image' photo.id %}">Editar</a>
+                        <a class="btn btn-danger col-12" href="{% url 'delete-image' photo.id %}">Excluir</a>
                     </div>
                 </div>
             </div>
